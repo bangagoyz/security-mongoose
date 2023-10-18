@@ -3,8 +3,11 @@ import bodyParser from "body-parser"
 import ejs from "ejs"
 import mongoose from "mongoose"
 import encrypt from "mongoose-encryption"
+import 'dotenv/config'
 
 const app = express()
+
+
 const PORT = 3000
 
 app.use(express.static("public"))
@@ -23,8 +26,8 @@ const userSchema = new mongoose.Schema({
 })
 
 
-const secret = "Thisourlittlesecret"
-userSchema.plugin(encrypt, {secret:secret, encryptedFields: ['password']})// to encrypt password only !
+
+userSchema.plugin(encrypt, {secret:process.env.SECRET, encryptedFields: ['password']})// to encrypt password only !
 
 
 const User = new mongoose.model("User", userSchema)
